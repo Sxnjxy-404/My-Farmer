@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F2C Login and Registration</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+      <style>
+  
+  /* Styles for menu icon and sidebar */
+        .menu-icon {
+            font-size: 30px;
+            cursor: pointer;
+            padding: 10px;
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            z-index: 1000;
+        }
+
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1000;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+        .sidebar a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            color: #f1f1f1;
+        }
+
+        .sidebar .closebtn {
+            position: absolute;
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+        }
+
+  
+      </style>
+  
+  <!-- Menu Icon -->
+    <div class="menu-icon" id="menu-icon">
+        ☰
+    </div>
+
+    <!-- Sidebar Menu -->
+    <div class="sidebar" id="sidebar">
+        <a href="#" class="closebtn" id="closebtn">&times;</a>
+        <a href="#">Home</a>
+        <a href="#">My Profile</a>
+        <a href="#">My Orders</a>
+        <a href="#">Settings</a>
+        <a href="#">Logout</a>
+    </div>
+  
+    <!-- Login Form -->
+    <div id="login-section">
+        <form id="loginForm">
+            <input type="text" id="username" placeholder="Username" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+        </form>
+    </div>
+
+    <!-- Registration Page -->
+    <div id="registration-section">
+        <h1 class="title">F2C Registration</h1>
+        <button id="register-farmer" class="btn">Register as Farmer</button>
+        <button id="register-consumer" class="btn">Register as Consumer</button>
+
+        <!-- Farmer Registration Form -->
+        <div id="farmer-form" class="registration-form">
+            <h2>Farmer Registration</h2>
+            <input type="text" id="farmer-name" placeholder="Name" required>
+            <input type="number" id="farmer-age" placeholder="Age" required>
+            <input type="text" id="farmer-address" placeholder="Address" required>
+            <input type="tel" id="farmer-phone" placeholder="Phone Number" required>
+            <input type="email" id="farmer-email" placeholder="Email Address (optional)">
+            <button id="submit-farmer" class="btn">Submit</button>
+        </div>
+
+        <!-- Consumer Registration Form -->
+        <div id="consumer-form" class="registration-form">
+            <h2>Consumer Registration</h2>
+            <input type="text" id="consumer-name" placeholder="Name" required>
+            <input type="number" id="consumer-age" placeholder="Age" required>
+            <input type="text" id="consumer-address" placeholder="Address" required>
+            <input type="tel" id="consumer-phone" placeholder="Phone Number" required>
+            <input type="email" id="consumer-email" placeholder="Email Address (optional)">
+            <button id="submit-consumer" class="btn">Submit</button>
+        </div>
+    </div>
+
+    <!-- Farm Products -->
+    <div id="products-section" style="display: none;">
+        <h1 class="title">OUR FARM PRODUCTS</h1>
+        <div class="products-container">
+            <!-- Example Products -->
+            <!-- Repeat this block for additional products -->
+            <div class="product" data-name="Tomato" data-price="25">
+                <h3>Tomato</h3>
+                <img src="https://media.istockphoto.com/id/1355698907/vector/tomato-icon-clipart-vegetable-vector-illustration.jpg?s=612x612&w=0&k=20&c=deYPZkyRge_A59F7wjRtDyNvTjCNlLMcvlmC07ujt4I="  alt="Tomato" class="product-image">
+                <p>Price: ₹25 per kg</p>
+                <p>Available: 100 kg</p>
+                <button class="btn buy-btn">Buy</button>
+            </div>
+            <div class="product" data-name="Potato" data-price="40">
+                <h3>Potato</h3>
+                <img src="https://static.vecteezy.com/system/resources/thumbnails/018/931/328/small/cartoon-potato-icon-png.png" alt="Potato" class="product-image">
+                <p>Price: ₹40 per kg</p>
+                <p>Available: 150 kg</p>
+                <button class="btn buy-btn">Buy</button>
+            </div>
+            <div class="product" data-name="Carrot" data-price="30">
+                <h3>Carrot</h3>
+                <img src="https://t4.ftcdn.net/jpg/02/04/10/95/360_F_204109503_OxuR11rq9CLkEFkjWphOBABSDTBTNJrc.jpg" alt="Carrot" class="product-image">
+                <p>Price: ₹60 per kg</p>
+                <p>Available: 80 kg</p>
+                <button class="btn buy-btn">Buy</button>
+            </div>
+            <div class="product" data-name="Beetroot" data-price="25">
+                <h3>Beetroot</h3>
+                <img src="https://t4.ftcdn.net/jpg/03/20/23/83/360_F_320238304_uZJUryyvqfkJyl5nl1oYEaDV5AMwVIkF.jpg" alt="Beetroot" class="product-image">
+                <p>Price: ₹80 per kg</p>
+                <p>Available: 50 kg</p>
+                <button class="btn buy-btn">Buy</button>
+            </div>
+            <div class="product" data-name="Apple" data-price="100">
+                <h3>Apple</h3>
+                <img src="https://media.istockphoto.com/id/1351002052/vector/red-apple-icon-clipart-vector-illustration.jpg?s=612x612&w=0&k=20&c=OG9pIMq6lxVv2lEkzQEeNL8GwyyppX7lEsYvdPlbVmI=" alt="Apple" class="product-image">
+                <p>Price: ₹150 per kg</p>
+                <p>Available: 120 kg</p>
+                <button class="btn buy-btn">Buy</button>
+            </div>
+            <div class="product" data-name="Orange" data-price="80">
+                <h3>Orange</h3>
+                <img src="https://media.istockphoto.com/id/165974969/vector/florida-orange.jpg?s=612x612&w=0&k=20&c=MBErgzy-4tpUyXx0rrkvOyyF1X6vps_bm970ozvNpRk=" alt="Orange" class="product-image">
+                <p>Price: ₹100 per kg</p>
+                <p>Available: 90 kg</p>
+                <button class="btn buy-btn">Buy</button>
+            </div>
+            
+            <div class="product" data-name="Banana" data-price="60">
+                <h3>Banana</h3>
+                <img src="https://media.istockphoto.com/id/804495812/vector/yellow-not-peeled-banana.jpg?s=612x612&w=0&k=20&c=cv7wUTj9DF_au1biwWb27c09G_a-9F2KpRhgP_sth80=" alt="Banana" class="product-image">
+                <p>Price: ₹60 per kg</p>
+                <p>Available: 100 kg</p>
+                <button class="btn buy-btn">Buy</button>
+            </div>
+            <div class="product" data-name="Pomegranate" data-price="120">
+                <h3>Pomegranate</h3>
+                <img src="https://png.pngtree.com/png-vector/20230726/ourmid/pngtree-pomegranate-on-white-background-png-image_6749646.png" alt="pomegranate" class="product-image">
+                <p>Price: ₹120 per kg</p>
+                <p>Available: 150 kg</p>
+                <button class="btn buy-btn">Buy</button>
+            </div>
+            <div class="product" data-name="Strawberry" data-price="150">
+                <h3>Strawberry</h3>
+                <img src="https://png.pngtree.com/png-clipart/20230528/original/pngtree-cute-strawberry-cartoon-png-image_9172224.png" alt="Strawberry" class="product-image">
+                <p>Price: ₹150 per kg</p>
+                <p>Available: 80 kg</p>
+                <button class="btn buy-btn">Buy</button>
+            </div>
+            <div class="product" data-name="Mango" data-price="200">
+                <h3>Mango</h3>
+                <img src="https://t3.ftcdn.net/jpg/01/36/33/48/360_F_136334861_pBHpG4hSvyN66ddSqs0ddtKXG8Eoq3NW.jpg" alt="Mango" class="product-image">
+                <p>Price: ₹200 per kg</p>
+                <p>Available: 50 kg</p>
+                <button class="btn buy-btn">Buy</button>
+            </div>
+            <div class="product" data-name="Pineapple" data-price="100">
+                <h3>Pineapple</h3>
+                <img src="https://t3.ftcdn.net/jpg/01/80/31/64/360_F_180316434_mY7TCf3Yp1MqMCJ0fOITXYLpATSHPQI1.jpg" alt="Pineapple" class="product-image">
+                <p>Price: ₹100 per kg</p>
+                <p>Available: 120 kg</p>
+                <button class="btn buy-btn">Buy</button>
+            </div>
+            <div class="product" data-name="Cucumber" data-price="120">
+                <h3>Cucumber</h3>
+                <img src="https://t3.ftcdn.net/jpg/02/61/77/66/360_F_261776671_bqXfGgmNzHKUTUg8juBCSKQNKuCFE3Uf.jpg" alt="Cucumber" class="product-image">
+                <p>Price: ₹120 per kg</p>
+                <p>Available: 90 kg</p>
+                <button class="btn buy-btn">Buy</button>
+            </div>
+            
+            
+            <div class="product" data-name="Brinjal" data-price="40">
+                <h3>Brinjal</h3>
+                <img src="https://media.istockphoto.com/id/1438822885/vector/eggplant-vegetable-cartoon-vector-illustration.jpg?s=612x612&w=0&k=20&c=lkbgysHqjUsGAjukGlLZKtN6ZndMmP3xSFLkY5l3WlE="  alt="Brinjal" class="product-image">
+                <p>Price: ₹40 per kg</p>
+                <p>Available: 100 kg</p>
+                <button class="btn buy-btn">Buy</button>
+            </div>
+            <div class="product" data-name="Potato" data-price="30">
+                <h3>Ladysfinger</h3>
+                <img src="https://static.vecteezy.com/system/resources/previews/013/809/324/non_2x/ladyfinger-icon-green-vegetable-vector.jpg" alt="Ladysfinger" class="product-image">
+                <p>Price: ₹30 per kg</p>
+                <p>Available: 150 kg</p>
+                <button class="btn buy-btn">Buy</button>
+            </div>
+            <div class="product" data-name="Beans" data-price="60">
+                <h3>Beans</h3>
+                <img src="https://static6.depositphotos.com/1123497/629/v/450/depositphotos_6293600-stock-illustration-green-peas-vegetable-with-seed.jpg" alt="Beans" class="product-image">
+                <p>Price: ₹60 per kg</p>
+                <p>Available: 80 kg</p>
+                <button class="btn buy-btn">Buy</button>
+            </div>
+            <div class="product" data-name="Drumstick" data-price="30">
+                <h3>Drumstick</h3>
+                <img src="https://5.imimg.com/data5/SELLER/Default/2023/4/299215032/WR/PP/ZI/13912353/hybrid-a-grade-drumsticks-vegetable-moringa-oleifera-500x500.jpg" alt="Drumstick" class="product-image">
+                <p>Price: ₹30 per kg</p>
+                <p>Available: 50 kg</p>
+                <button class="btn buy-btn">Buy</button>
+            </div>
+            <div class="product" data-name="Bottle gourd" data-price="40">
+                <h3>Bottle gourd</h3>
+                <img src="https://cdn3d.iconscout.com/3d/premium/thumb/bottle-gourd-3d-icon-download-in-png-blend-fbx-gltf-file-formats--calabash-vegetable-fresh-vegetables-vegetarian-1-pack-food-drink-icons-4916163.png" alt="Bottle gourd" class="product-image">
+                <p>Price: ₹40 per kg</p>
+                <p>Available: 120 kg</p>
+                <button class="btn buy-btn">Buy</button>
+            </div>
+            <div class="product" data-name="Bitter gourd" data-price="60">
+                <h3>Bitter gourd</h3>
+                <img src="https://media.istockphoto.com/id/1191373157/vector/green-bitter-gourd-vegetable.jpg?s=612x612&w=0&k=20&c=27mn6jUu8GwI-1T965qO2eEeNccfjic6zbFgKPjSU-k=" alt="Bitter gourd" class="product-image">
+                <p>Price: ₹60 per kg</p>
+                <p>Available: 90 kg</p>
+                <button class="btn buy-btn">Buy</button>
+            </div>
+            
+            <div class="product" data-name="Capsicum" data-price="40">
+                <h3>Capsicum</h3>
+                <img src="https://img.freepik.com/free-vector/green-capsicum-sticker-white-background_1308-64388.jpg" alt="Capsicum" class="product-image">
+                <p>Price: ₹40 per kg</p>
+                <p>Available: 100 kg</p>
+                <button class="btn buy-btn">Buy</button>
+            </div>
+            <div class="product" data-name="Ginger" data-price="200">
+                <h3>Ginger</h3>
+                <img src="https://static.vecteezy.com/system/resources/previews/004/595/960/original/ginger-in-slice-and-powder-botanical-herb-for-seasoning-spice-or-medicine-concept-in-cartoon-illustration-isolated-in-white-background-vector.jpg" alt="Ginger" class="product-image">
+                <p>Price: ₹200 per kg</p>
+                <p>Available: 150 kg</p>
+                <button class="btn buy-btn">Buy</button>
+            </div>
+            <div class="product" data-name="Cauliflower" data-price="50">
+                <h3>Cauliflower</h3>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQzPiKckB5vlF_3IMh8LRi5ErYAXYzSCHxHOg&s" alt="Cauliflower" class="product-image">
+                <p>Price: ₹50 per kg</p>
+                <p>Available: 80 kg</p>
+                <button class="btn buy-btn">Buy</button>
+            </div>
+            <div class="product" data-name="Papaya" data-price="60">
+                <h3>Papaya</h3>
+                <img src="https://i.pinimg.com/736x/80/61/00/806100d8f2af6af7bca32b974b617693.jpg" alt="Papaya" class="product-image">
+                <p>Price: ₹60 per kg</p>
+                <p>Available: 50 kg</p>
+                <button class="btn buy-btn">Buy</button>
+            </div>
+            <div class="product" data-name="Sapota" data-price="80">
+                <h3>Sapota</h3>
+                <img src="https://t4.ftcdn.net/jpg/04/82/85/69/360_F_482856988_L3zTqqoHfeTFnyCWBdkfUMu39VOpGsVG.jpg" alt="Sapota" class="product-image">
+                <p>Price: ₹80 per kg</p>
+                <p>Available: 120 kg</p>
+                <button class="btn buy-btn">Buy</button>
+            </div>
+            <div class="product" data-name="Jamun fruit" data-price="80">
+                <h3>Jamun fruit(Nagapalam)</h3>
+                <img src="https://img.freepik.com/premium-photo/jamun-2d-cartoon-illustraton-white-background-high-qual_889056-24266.jpg" alt="Jamun fruit" class="product-image">
+                <p>Price: ₹80 per kg</p>
+                <p>Available: 90 kg</p>
+                <button class="btn buy-btn">Buy</button>
+            </div>   
+
+            <div class="product" data-name="Watermelon" data-price="40">
+                <h3>Watermelon</h3>
+                <img src="https://t4.ftcdn.net/jpg/02/71/31/29/360_F_271312913_fNkJIq7J4EojJTfB4flj6NLvl1NjYPJ4.jpg" alt="Watermelon" class="product-image">
+                <p>Price: ₹40 per kg</p>
+                <p>Available: 100 kg</p>
+                <button class="btn buy-btn">Buy</button>
+            </div>
+            <div class="product" data-name="Lemon" data-price="200">
+                <h3>Lemon</h3>
+                <img src="https://t3.ftcdn.net/jpg/01/38/70/04/360_F_138700421_9pgfc6KPGZ3kDfnzFYrosUltIKLDdvGd.jpg" alt="Lemon" class="product-image">
+                <p>Price: ₹200 per kg</p>
+                <p>Available: 150 kg</p>
+                <button class="btn buy-btn">Buy</button>
+            </div>
+            <div class="product" data-name="Coconut" data-price="50">
+                <h3>Coconut</h3>
+                <img src="https://t4.ftcdn.net/jpg/02/00/61/65/360_F_200616595_5t1djAuZMn2Tba9f0RxgheIfbCFiOWaK.jpg" alt="Coconut" class="product-image">
+                <p>Price: ₹50 per kg</p>
+                <p>Available: 80 kg</p>
+                <button class="btn buy-btn">Buy</button>
+            </div>
+            <div class="product" data-name="Guava" data-price="60">
+                <h3>Guava</h3>
+                <img src="https://media.istockphoto.com/id/1249213702/vector/guava-tasty-edible-tropical-green-fruit-icon.jpg?s=612x612&w=0&k=20&c=jwRFkjZVzCdJzyA_i-hXW-LA3sHtafiQul463geggQQ=" alt="Guava" class="product-image">
+                <p>Price: ₹60 per kg</p>
+                <p>Available: 50 kg</p>
+                <button class="btn buy-btn">Buy</button>
+            </div>
+            <div class="product" data-name="Dragon Fruit" data-price="80">
+                <h3>Dragon Fruit</h3>
+                <img src="https://media.istockphoto.com/id/1165156549/vector/pitaya-dragon-fruit.jpg?s=612x612&w=0&k=20&c=8CIUHB4rF1HUGuSxTh9mvwvMBuRgcGTSlE7ZNDdMl_E=" alt="Dragon Fruit" class="product-image">
+                <p>Price: ₹80 per kg</p>
+                <p>Available: 120 kg</p>
+                <button class="btn buy-btn">Buy</button>
+            </div>
+            <div class="product" data-name="Onion" data-price="80">
+                <h3>Onion</h3>
+                <img src="https://t4.ftcdn.net/jpg/03/47/86/51/360_F_347865112_yr32gdkr3HtxlGKKed3V7Hg9gwzEDby1.jpg" alt="Onion" class="product-image">
+                <p>Price: ₹80 per kg</p>
+                <p>Available: 90 kg</p>
+                <button class="btn buy-btn">Buy</button>
+            </div>
+            <!-- Add more products similarly -->
+        </div>
+		   <div id="finish-page" style="display: block;">
+        <button id="finish-button" class="btn">Finish</button>
+    </div>
+    </div>
+
+	  <div id="transaction-section" class="transaction-container" style="display: none;">
+        <h2>    Today's Order   </h2>
+        <p>1)</p>
+        <p><strong>Product Name:</strong> Fresh Apples</p>
+        <p><strong>Quantity:</strong> 2 kg</p>
+        <p><strong>Price:</strong> ₹200</p>
+        <p>--------------------------------</p>
+        <p>2)</p>
+        <p><strong>Product Name:</strong> Organic Carrots</p>
+        <p><strong>Quantity:</strong> 1 kg</p>
+        <p><strong>Price:</strong> ₹100</p>
+        <p>--------------------------------</p>
+        <p>3)</p>
+        <p><strong>Product Name:</strong> Fresh Oranges</p>
+        <p><strong>Quantity:</strong> 1.5 kg</p>
+        <p><strong>Price:</strong> ₹150</p>
+
+        <div class="total-price">
+            <p><strong>Total Price:</strong> ₹450</p>
+        </div>
+
+        <button id="confirm-transaction" class="btn">Place my Order</button>
+        <button id="cancel" class="btn">Cancel</button>
+    </div>
+        <script>
+         // Handling confirm transaction and cancel button
+            document.getElementById('confirm-transaction').addEventListener('click', function() {
+                alert('Hurray!, 🎉 Your transaction is Confirmed!');
+            });
+
+            document.getElementById('cancel').addEventListener('click', function() {
+                alert('Alas!, 😓 it\'s Cancelled!');
+            });
+    </script>
+	</div>
+    <!-- Quantity Modal -->
+    <div id="quantity-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p id="product-question"></p>
+            <input type="number" id="quantity-input" min="1" placeholder="Enter quantity in kg">
+            <button id="calculate-btn" class="btn">Calculate Price</button>
+        </div>
+    </div>
+
+    <!-- Price Modal -->
+    <div id="price-modal">
+        <p>Total Price:</p>
+        <p id="highlighted-price"></p>
+        <button class="close">Close</button>
+    </div>
+
+    <!-- AI Chat Bot Icon -->
+    <div id="chatbot-icon">
+        <!-- 💬 Emoji as Icon -->
+        <div class="chat-icon">💬</div>
+    </div>
+
+    <!-- Chat Interface -->
+    <div id="chat-container" class="chat-container">
+        <div class="chat-header">
+            <h2>Chat with AI</h2>
+            <button id="close-chat">X</button>
+        </div>
+        <div id="chat-box" class="chat-box">
+            <div class="message bot-message">Hello! How can I assist you today?</div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="user-input" placeholder="Type your message...">
+            <button id="send-message">Send</button>
+        </div>
+    </div>
+
+    <script>
+	
+          // Handle the "Finish" button click to show the transaction page
+    document.getElementById('finish-button').addEventListener('click', function() {
+        document.getElementById('products-section').style.display = 'none';
+        document.getElementById('transaction-section').style.display = 'block';
+    });
+    // JavaScript for menu icon
+        document.getElementById("menu-icon").addEventListener("click", function() {
+            document.getElementById("sidebar").style.width = "250px";
+        });
+
+        document.getElementById("closebtn").addEventListener("click", function() {
+            document.getElementById("sidebar").style.width = "0";
+        });
+        
+        
+        // JavaScript for form submission and redirection
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            document.getElementById("login-section").style.display = "none";
+            document.getElementById("registration-section").style.display = "block";
+        });
+
+        document.getElementById("register-farmer").addEventListener("click", function() {
+            document.getElementById("farmer-form").style.display = "block";
+            document.getElementById("consumer-form").style.display = "none";
+        });
+
+        document.getElementById("register-consumer").addEventListener("click", function() {
+            document.getElementById("consumer-form").style.display = "block";
+            document.getElementById("farmer-form").style.display = "none";
+        });
+
+        document.getElementById("submit-farmer").addEventListener("click", function() {
+            alert("Farmer registered successfully!");
+            document.getElementById("registration-section").style.display = "none";
+            document.getElementById("products-section").style.display = "block";
+        });
+
+        document.getElementById("submit-consumer").addEventListener("click", function() {
+            alert("Consumer registered successfully!");
+            document.getElementById("registration-section").style.display = "none";
+            document.getElementById("products-section").style.display = "block";
+        });
+        
+        
+        
+    
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent form from submitting normally
+
+            // Hide login form and show registration page
+            document.getElementById('login-section').style.display = 'none';
+            document.getElementById('registration-section').style.display = 'block';
+        });
+
+        document.getElementById('register-farmer').addEventListener('click', function() {
+            document.getElementById('farmer-form').style.display = 'block';
+            document.getElementById('consumer-form').style.display = 'none';
+        });
+
+        document.getElementById('register-consumer').addEventListener('click', function() {
+            document.getElementById('consumer-form').style.display = 'block';
+            document.getElementById('farmer-form').style.display = 'none';
+        });
+
+        document.getElementById('submit-farmer').addEventListener('click', function() {
+            var name = document.getElementById('farmer-name').value;
+            var age = document.getElementById('farmer-age').value;
+            var address = document.getElementById('farmer-address').value;
+            var phone = document.getElementById('farmer-phone').value;
+            var email = document.getElementById('farmer-email').value;
+
+            // Process Farmer data (e.g., send to server)
+
+            // Hide registration page and show products page
+            document.getElementById('registration-section').style.display = 'none';
+            document.getElementById('products-section').style.display = 'block';
+        });
+
+        document.getElementById('submit-consumer').addEventListener('click', function() {
+            var name = document.getElementById('consumer-name').value;
+            var age = document.getElementById('consumer-age').value;
+            var address = document.getElementById('consumer-address').value;
+            var phone = document.getElementById('consumer-phone').value;
+            var email = document.getElementById('consumer-email').value;
+
+            // Process Consumer data (e.g., send to server)
+
+            // Hide registration page and show products page
+            document.getElementById('registration-section').style.display = 'none';
+            document.getElementById('products-section').style.display = 'block';
+        });
+
+        // Handle "Buy" button click to show quantity modal
+        document.querySelectorAll('.buy-btn').forEach(function(button) {
+            button.addEventListener('click', function() {
+                var productName = this.parentElement.dataset.name;
+                var productPrice = this.parentElement.dataset.price;
+
+                document.getElementById('product-question').textContent = `How many kg of ${productName} would you like to buy?`;
+                document.getElementById('quantity-modal').style.display = 'flex';
+
+                document.getElementById('calculate-btn').addEventListener('click', function() {
+                    var quantity = document.getElementById('quantity-input').value;
+                    var totalPrice = productPrice * quantity;
+                    document.getElementById('highlighted-price').textContent = `₹${totalPrice}`;
+                    document.getElementById('price-modal').style.display = 'block';
+                });
+
+                document.querySelector('#price-modal .close').addEventListener('click', function() {
+                    document.getElementById('price-modal').style.display = 'none';
+                });
+
+                document.querySelector('#quantity-modal .close').addEventListener('click', function() {
+                    document.getElementById('quantity-modal').style.display = 'none';
+                });
+            });
+        });
+
+        // Show and hide chat container
+        document.getElementById('chatbot-icon').addEventListener('click', function() {
+            var chatContainer = document.getElementById('chat-container');
+            if (chatContainer.style.display === 'none' || chatContainer.style.display === '') {
+                chatContainer.style.display = 'block';
+            } else {
+                chatContainer.style.display = 'none';
+            }
+        });
+
+        document.getElementById('close-chat').addEventListener('click', function() {
+            document.getElementById('chat-container').style.display = 'none';
+        });
+    </script>
+</body>
+<script src="script.js"></script>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
